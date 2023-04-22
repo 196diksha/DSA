@@ -1,0 +1,207 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct nodetype{
+    int info;
+    struct nodetype *next;
+}node;
+
+void main()
+{
+    void insertB(node **, int);
+    void traversal(node*);
+    void insertE(node **,int );
+    void deleteE(node **);
+    void deleteB(node **);
+    void searching(node *,int);
+    void insertAfter(node *,int,int);
+    void insertBefore(node **,int, int);
+
+
+    node *head=NULL;
+    int x;
+    int y;
+    while(1){
+        int n;
+        printf("\nMenu\n0 => exit\n1 => insertion at Beginning\n2 => insertion at end\n3 => deletion from Beginning\n");
+        printf("4 => deletion from end\n5 => traversal\n6 => searching\n7 => insert after\n8 => insert before\nYour choice : ");
+        scanf("%d",&n);
+        printf("\n");
+        switch(n){
+            case 0: exit(0);
+            case 1: printf("Enter number");
+                    scanf("%d",&x);
+                    insertB(&head,x);                   
+                    break;
+            case 2: printf("Enter number");
+                    scanf("%d",&x);
+                    insertE(&head,x);                   
+                    break;
+            case 3: deleteB(&head);                   
+                    break;
+            case 4: deleteE(&head);                   
+                    break;
+            case 5: traversal(head);
+                    break;
+            case 6: printf("Enter number to search : ");
+                    scanf("%d",&x);
+                    searching(head,x);                   
+                    break;
+            case 7: printf("enter value you want to insert : ");
+                    scanf("%d",&x);
+                    printf("enter after which value you want to insert %d : ",x);
+                    scanf("%d",&y);
+                    insertAfter(head,x,y);
+                    break;
+            case 8: printf("enter value you want to insert : ");
+                    scanf("%d",&x);
+                    printf("enter before which value you want to insert %d : ",x);
+                    scanf("%d",&y);
+                    insertBefore(&head,x,y);
+                    break;
+            default:printf("Enter valid number from Menu.\n");
+                    break;
+        }
+    }
+}
+void insertB(node **head, int n){
+    node *ptr;
+    ptr=(node *)malloc(sizeof(node));
+    ptr->info=n;
+    if(*head==NULL){
+        *head=ptr;
+        ptr->next=NULL;
+    }else{
+        ptr->next=*head;
+        *head=ptr;
+    }
+     printf("Item(%d) inserted at the Beginning.\n",n);
+}
+void traversal(node * head){
+    if(head == NULL){
+        printf("Empty List\n");
+        return;
+    }
+    while(head != NULL){
+        printf("%d -> ",head->info);
+        head=head->next;
+    }
+    printf("NULL\n");
+}
+void insertE(node **head,int n){
+    node *ptr;
+    ptr=(node *)malloc(sizeof(node));
+    ptr->info=n;
+    ptr->next=NULL;
+    if(*head == NULL){
+        *head=ptr;
+    }else{
+        node *curr=*head;
+        while(curr->next != NULL){
+            curr=curr->next;
+        }
+        curr->next=ptr;
+    }
+    printf("Item(%d) inserted at the end.\n",n);
+}
+void deleteE(node **head){
+    node *curr=*head;
+    
+    if(*head == NULL){
+        printf("List is empty. No item to delete\n");
+        return;
+    }else if( curr -> next==NULL){
+        *head=NULL;
+    }else{
+        while(curr->next->next != NULL){
+            curr=curr->next;
+        }
+        curr->next=NULL;
+    }
+    printf("Item deleted from End\n");
+}
+void searching(node *head,int n){
+    int f=-1;
+    while(head != NULL){
+        if(head->info == n){
+            f=1;
+            break;
+        }
+        head=head->next;
+    }
+    if(f==1)
+    printf("Found\n");
+    else
+    printf("Not found\n");
+}
+void deleteB(node **head){
+    node *curr=*head;
+    if(*head == NULL){
+        printf("List is empty. No item to delete\n");
+        return;
+    }else if( curr -> next==NULL){
+        *head=NULL;
+    }else{
+        curr=curr->next;
+        *head=curr;
+    }
+    printf("Item Deleted from Beginning\n");
+}
+void insertAfter(node *head,int val,int after){  
+    node *ptr,*curr;
+    ptr=(node *)malloc(sizeof(node));
+    ptr->info=val;
+    curr=head;
+    if(head==NULL){
+    printf("empty list\n");
+    return;
+    }
+    while(curr != NULL && curr-> info != after)
+    curr=curr->next;
+    
+    if(curr==NULL){
+        printf("No such value(%d) found in list\n",after);
+    }else{
+        head=curr->next;
+        curr->next=ptr;
+        ptr->next=head;
+        printf("Value inserted\n");
+        
+    }
+    
+}
+void insertBefore(node **head,int val, int before){
+    node *ptr,*curr;
+    ptr=(node *)malloc(sizeof(node));
+    ptr->info=val;
+    curr=*head;
+    if(*head==NULL){
+    printf("empty list\n");
+    return;
+    }else if(curr->info == before){  //
+        ptr->next=*head;
+        *head=ptr;
+        printf("Value inserted\n");
+
+    }
+    else {
+        node *pre;
+    while(curr != NULL && curr -> info != before){ 
+    pre=curr;
+    curr=curr->next;
+    }
+    
+    if(curr==NULL){
+        printf("No such value(%d) found in list\n",before);
+    }else{
+        ptr->next=curr;
+        pre->next=ptr;
+        printf("Value inserted\n");
+    }
+    }
+}
+
+
+
+
+

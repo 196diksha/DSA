@@ -1,0 +1,65 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct nodetype{
+    int info;
+    struct nodetype *next;
+}node;
+
+void main(){
+    
+    node *top=NULL;
+    int x;
+    void push(node **, int );
+    void pop(node **);
+    while(1){
+        int p;
+        printf("enter choice");
+        scanf("%d",&p);
+        switch(p){
+            case 1:printf("enter data");
+            scanf("%d",&x);
+            push(&top ,  x);
+            break;
+            case 2: pop(&top);
+            break;
+            case 3: exit(0);
+            default: printf("enter valid choice");
+        }
+    }
+}
+    void push(node **head,int n){
+         //node *top=NULL;
+    node *ptr;
+     ptr=(node*)malloc(sizeof(node));
+    ptr->info=n;
+   ptr->next=NULL;
+   if(*head==NULL){
+       *head=ptr;
+   }
+   else{
+       node *curr= *head;
+       while(curr->next!= NULL){
+           curr=curr->next;
+       }
+       curr->next=ptr;
+   }
+       printf("item %d pushed \n",n);
+   
+    }
+    void pop(node **head){
+        node *curr= *head;
+        if(*head==NULL){
+            printf("stack is underflow");
+        }
+        else if(curr->next=NULL){
+            *head=NULL;
+        }
+        else{
+            while(curr->next!=NULL){
+             curr= curr->next;  
+            }
+            curr->next=NULL;
+        }
+        printf(" item is popped \n");
+    }
+

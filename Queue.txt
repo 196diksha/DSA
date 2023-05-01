@@ -1,0 +1,61 @@
+#include<stdio.h>
+#include<stdlib.h>
+// #define M 3;
+int queue[3];
+int n,x;
+int front=-1,rear=-1;
+void main(){
+    void enqueue( int x);
+    void deQueue();
+    void display();
+    while(1){
+        printf("enter choice");
+        scanf("%d",&n);
+        switch(n){
+            case 1:printf("enter data in queue");
+            scanf("%d",&x);
+            enqueue(x);
+            break;
+            case 2: deQueue();
+            case 3: display();
+            case 4: exit(0);
+            break;
+            default: printf("enter valid choice");
+        }
+    }
+}
+void enqueue(int x){
+   if(rear == 3-1)
+      printf("\nQueue is Full!!! Insertion is not possible!!!");
+   else{
+      if(front == -1)
+	 front = 0;
+      rear++;
+      queue[rear] = x;
+      printf("\nInsertion success!!!");
+   }
+}
+void deQueue(){
+   if(front == rear)
+      printf("\nQueue is Empty!!! Deletion is not possible!!!");
+   else{
+      printf("\nDeleted : %d", queue[front]);
+      front++;
+      if(front == rear)
+	 front = rear = -1;
+   }
+}
+void display(){
+    if(front == -1 && rear == -1){
+        printf("Queue is empty");
+    }
+    else{
+        for(int i=front;i<rear+1;i++){
+            printf(" Queue is %d ",queue[i]);
+        }
+    }
+}
+
+
+
+
